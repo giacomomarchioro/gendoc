@@ -11,8 +11,16 @@ The results will be prompt on the console.
 """
 header = 'def histogram(self,vminx=None,vmaxx=None,auto=True,vlines=[]):'
 
+header2 = """def histogram(self,vminx=None,
+            vmaxx=None,
+            auto=True,
+            vlines=[]):"""
 
-
+def _get_args_list(header):
+    ufargs = header[:-2].split('(')[1] #this takes the args part
+    #removes \t and \n and white sapces
+    return " ".join(ufargs.split()).split(',') 
+    
 def gendocnp(header):
     '''
     It prints the docstring of the function with a numpy style directly 
@@ -35,7 +43,7 @@ def gendocnp(header):
     if header[-1]!=':':
         print "Function should end with colon"
         return
-    args = header[:-2].split('(')[1].split(',')
+    args = _get_args_list(header)
     description = raw_input('Describe briefly what it does: ')
     argsdescritpion = []
     examples = {}    
@@ -54,7 +62,7 @@ def gendocnp(header):
             argdesc= raw_input('Descritpion of argument %s : ' %(i))
             typeinfo = raw_input('Type info: ')
             argsdescritpion.append("%s : %s \n \t %s" %(i,typeinfo,argdesc))
-    returns = raw_input('Describe briefly what it return: ')
+    returns = raw_input('Describe briefly what it returns: ')
     answer = raw_input('Do you want to write some example? (note function must be loaded) y/n ')
     if answer.lower() == 'y':        
         function_name = header[:-2].split('(')[0]
@@ -150,12 +158,15 @@ def gendocpep(header):
         elif '=' in i:
             argsplitted = i.split('=')
             argdesc= raw_input('Descritpion of argument %s :  ' %(i) )
-            argsdescritpion.append("%s -- %s  (default %s)" %(argsplitted[0],argdesc,argsplitted[1]))
+            argsdescritpion.append("%s -- %s  (default %s)" %(argsplitted[0],
+                                   argdesc,
+                                   argsplitted[1]))
         else:
             argdesc= raw_input('Descritpion of argument %s : ' %(i))
             argsdescritpion.append("%s -- %s" %(i,argdesc))
     returns = raw_input('Describe briefly what it return: ')
-    answer = raw_input('Do you want to write some example? (note function must be loaded) y/n ')
+    answer = raw_input("""Do you want to write some example? 
+                       (note function must be loaded) y/n """)
     if answer.lower() == 'y':        
         function_name = header[:-2].split('(')[0]
         if 'def' in function_name: #in case you placed the def or not
