@@ -5,7 +5,7 @@ This module help you to write quickly docstring using variuous conventions
 based on pep257 just copy the first line of the function and a wizard will guide
 you.
 
-PEP-8 specify a maximum line length of 79 characters.
+
 
 The results will be prompt on the console.
 
@@ -37,9 +37,11 @@ def _get_args_list(header):
 
 def add_PEPline(spaces, *tokens):
     '''
+    Lenght of the line?
+    PEP-8 specify a maximum line length of 79 characters.
     Tab or spaces?
     Following PEP8 we can add spaces for formatting using the first argument
-    avoid any tab
+    avoid any tab.
     https://www.python.org/dev/peps/pep-0008/#tabs-or-spaces
     '''
     tobeprinted = []
@@ -117,7 +119,7 @@ def gendocnp(header=None,
             line =  "%s : %s" %(argsplitted[0],typeinfo)
             tobeprinted += add_PEPline(spaces,line)
             line2 =  "%s (default %s)" %(argdesc,argsplitted[1])
-            tobeprinted += add_PEPline(spaces+len(argsplitted[0]),line2)
+            tobeprinted += add_PEPline(spaces+4,line2)
             
         else:
             argdesc= input('Descritpion of argument %s : ' %(i))
@@ -127,7 +129,7 @@ def gendocnp(header=None,
             else:
                 line = "%s : %s" %(i,typeinfo)
             tobeprinted += add_PEPline(spaces,line)
-            tobeprinted += add_PEPline(spaces+len(argsplitted[0]),argdesc)
+            tobeprinted += add_PEPline(spaces+4,argdesc)
     #Returns section:  
     tobeprinted += add_PEPline(spaces,"")      
     tobeprinted += add_PEPline(spaces,"Returns")
@@ -137,10 +139,12 @@ def gendocnp(header=None,
     #Examples section:
     answer = input("""Do you want to write some example? 
                        (note function must be loaded) y/n """)
+    tobeadded = []
     if answer.lower() == 'y':
-        tobeprinted += add_PEPline(spaces,"")      
-        tobeprinted += add_PEPline(spaces,"Examples")
-        tobeprinted += add_PEPline(spaces,"-------")        
+        
+        tobeadded += add_PEPline(spaces,"")      
+        tobeadded += add_PEPline(spaces,"Examples")
+        tobeadded += add_PEPline(spaces,"-------")        
         function_name = header[:-2].split('(')[0]
         if 'def' in function_name: #in case you placed the def or not
             function_name=function_name.split(' ')[1]
