@@ -1,10 +1,10 @@
-# gendoc-
+# gendoc
 A tool for helping you writing the Python module docstrings.
 
 
 # Installation 
   ```
-  pip install git+https://github.com/giacomomarchioro/micropro
+  pip install git+https://github.com/giacomomarchioro/gendoc
   ```
 # Basic usage
   
